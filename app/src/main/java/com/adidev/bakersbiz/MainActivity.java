@@ -2,6 +2,7 @@ package com.adidev.bakersbiz;
 
 import android.os.Bundle;
 
+import com.adidev.bakersbiz.repository.Repository;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;

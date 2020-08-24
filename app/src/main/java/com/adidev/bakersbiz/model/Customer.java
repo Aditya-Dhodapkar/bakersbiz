@@ -9,6 +9,13 @@ public class Customer {
 	private String name;
 	private String phone;
 	private String email;
+	private Long contactID;
+
+    public Customer(Long contactID, String contactName, String contactNumber) {
+        this.contactID = contactID;
+        name = contactName;
+        phone = contactNumber;
+    }
 
     public String getEmail() {
         return email;
@@ -43,4 +50,10 @@ public class Customer {
         return null;
     }
 
+    public Long getContactID() {
+        return contactID;
+    }
+    public void setContactID(Long contactID) {
+        this.contactID = contactID;
+    }
 }

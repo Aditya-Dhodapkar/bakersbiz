@@ -8,5 +8,7 @@ public class Ingredient {
     private int pricePerUnit;
     private LocalDate lastRefreshed;
     private int noOfUnitsInLastRefresh;
-
+    private int totalUnitsOrderedSoFar;
+    private int totalSpent;
+    private int thresholdsForRefresh;
 }
