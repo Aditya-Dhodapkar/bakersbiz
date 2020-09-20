@@ -46,7 +46,7 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel = new DashboardViewModel(((GlobalClass)getContext().getApplicationContext()).getRepository());
+        dashboardViewModel = new DashboardViewModel(((GlobalClass)getContext().getApplicationContext()).getRepository(), this);
 
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 

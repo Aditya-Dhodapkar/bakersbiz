@@ -90,6 +90,18 @@ public class MockStore implements Store {
         return false;
     }
 
+    @Override
+    public Customer getCustomer(int customerId) {
+
+        for(int i=0;i<list.size();i++){
+            Customer customer = list.get(i);
+            if(customer.getCustomerID() == customerId)
+                return customer;
+        }
+
+        return null;
+    }
+
     private Customer MakeCustomer(){
         Customer customer = new Customer((long) 23232, "Aditya", "9581466605");
         return customer;

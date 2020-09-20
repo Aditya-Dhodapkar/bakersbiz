@@ -15,11 +15,24 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.adidev.bakersbiz.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/navigate_to_customer_detail"
+            app:destination="@id/navigation_customer_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.adidev.bakersbiz.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:label="@string/title_notifications">
+     </fragment>
+    <fragment
+        android:id="@+id/navigation_customer_details"
+        android:name="com.adidev.bakersbiz.ui.customerdetails.CustomerDetailsFragment"
+        android:label="@string/customers_details"
+        tools:layout="@layout/fragment_customer_details">
+        <argument
+            android:name="customer_id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

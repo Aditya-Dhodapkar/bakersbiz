@@ -18,4 +18,5 @@ public interface Store {
     boolean addItemToInventory(Ingredient item);
     boolean updateItemInInventory(Ingredient item);
     boolean deleteItemToInventory(Ingredient item);
- }
+    Customer getCustomer(int customerId);
+}

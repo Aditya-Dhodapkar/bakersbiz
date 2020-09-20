@@ -84,4 +84,7 @@ public class Repository {
         return false;
     }
 
+    public Customer getCustomer(int customerId) {
+        return store.getCustomer(customerId);
+    }
 }

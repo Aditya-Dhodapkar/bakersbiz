@@ -10,11 +10,13 @@ public class Customer {
 	private String phone;
 	private String email;
 	private Long contactID;
+    private int customerID;
 
     public Customer(Long contactID, String contactName, String contactNumber) {
         this.contactID = contactID;
         name = contactName;
         phone = contactNumber;
+        customerID = contactID.intValue();
     }
 
     public String getEmail() {
@@ -53,6 +55,7 @@ public class Customer {
     public Long getContactID() {
         return contactID;
     }
+    public int getCustomerID (){return customerID;}
     public void setContactID(Long contactID) {
         this.contactID = contactID;
     }
