@@ -1,6 +1,8 @@
 package com.adidev.bakersbiz.model;
 import java.util.List;
 
+//This is the store interface. This allows us
+//to have different implementation of the store.
 public interface Store {
     List<Customer> getCustomers();
     List<Order> getOrders();

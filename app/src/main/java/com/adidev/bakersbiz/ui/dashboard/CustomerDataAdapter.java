@@ -41,7 +41,6 @@ public class CustomerDataAdapter extends Adapter {
         ((CustomerViewHolder)holder).RetrieveContactPhoto(customer.getContactID());
         ((CustomerViewHolder)holder).setCustomer(customer);
     }
-
     @Override
     public int getItemCount() {
         return repository.getCustomers().size();

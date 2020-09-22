@@ -10,7 +10,7 @@ public class GlobalClass extends Application {
     @Override
     public void onCreate (){
         super.onCreate();
-        repository = new Repository();
+        repository = new Repository(getApplicationContext().getFilesDir().getAbsolutePath());
     }
 
     public Repository getRepository() {

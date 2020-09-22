@@ -16,9 +16,9 @@ public class Repository {
 
     private Store store;
 
-    public  Repository() {
+    public  Repository(String filesDir) {
 
-        store = new MockStore();
+        store = new MockStore(filesDir);
     }
     public List<Customer> getCustomers() {
         return store.getCustomers();

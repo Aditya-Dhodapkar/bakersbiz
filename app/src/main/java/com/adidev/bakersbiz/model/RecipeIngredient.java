@@ -1,6 +1,8 @@
 package com.adidev.bakersbiz.model;
 
-public class RecipeIngredient {
+import java.io.Serializable;
+
+public class RecipeIngredient implements Serializable {
     private Ingredient ingredient;
     private float numberOfUnitsInRecipe;
 }

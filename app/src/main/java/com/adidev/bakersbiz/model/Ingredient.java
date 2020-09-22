@@ -1,8 +1,9 @@
 package com.adidev.bakersbiz.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Ingredient {
+public class Ingredient implements Serializable {
     private String name;
     private int totalUnitsInInventory;
     private int pricePerUnit;

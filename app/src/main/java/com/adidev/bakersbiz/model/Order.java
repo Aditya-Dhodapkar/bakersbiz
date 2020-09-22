@@ -1,8 +1,9 @@
 package com.adidev.bakersbiz.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class Order {
+public class Order implements Serializable {
     private int orderID;
     private int customerID;
     private MenuItem item;
