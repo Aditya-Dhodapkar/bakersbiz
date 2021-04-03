@@ -1,26 +1,19 @@
-package com.adidev.bakersbiz.ui.dashboard;
+package com.adidev.bakersbiz.ui.customers;
 import android.content.ContentUris;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.ContactsContract;
 
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adidev.bakersbiz.R;
 import com.adidev.bakersbiz.model.Customer;
-import com.adidev.bakersbiz.ui.customerdetails.CustomerDetailsFragment;
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.textview.MaterialTextView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,7 +41,7 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder  implements View
         this.associatedFragment = associatedFragment;
     }
 
-    public void RetrieveContactPhoto(Long contactID) {
+    public Bitmap RetrieveContactPhoto(Long contactID) {
 
         Bitmap photo = null;
         try {
@@ -65,6 +58,8 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder  implements View
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return photo;
     }
 
     public void setCustomer(Customer customer){
@@ -74,13 +69,15 @@ public class CustomerViewHolder extends RecyclerView.ViewHolder  implements View
     @Override
     public void onClick(View view) {
 
-       DashboardFragmentDirections.NavigateToCustomerDetail directions =
-            DashboardFragmentDirections.navigateToCustomerDetail(customer.getCustomerID());
+       CustomerFragmentDirections.NavigateToCustomerDetail directions =
+               CustomerFragmentDirections.navigateToCustomerDetail(customer.getCustomerID());
         NavHostFragment.findNavController(associatedFragment).navigate(directions);
     }
 
     @Override
     public boolean onLongClick(View view) {
-        return false;
+
+        ((CustomerFragment)associatedFragment).setLongClickedCustomer(customer);
+       return false;
     }
 }

@@ -1,57 +1,57 @@
-package com.adidev.bakersbiz.ui.dashboard;
+package com.adidev.bakersbiz.ui.customers;
 
-import android.content.ContentUris;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.adidev.bakersbiz.GlobalClass;
+import com.adidev.bakersbiz.MainActivity;
 import com.adidev.bakersbiz.R;
+import com.adidev.bakersbiz.model.Customer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import static android.app.Activity.RESULT_OK;
 
-public class DashboardFragment extends Fragment {
+public class CustomerFragment extends Fragment {
 
     private static final int REQUEST_CODE_PICK_CONTACTS = 1;
-    private DashboardViewModel dashboardViewModel;
+    private CustomerViewModel customerViewModel;
     private RecyclerView customersRecyclerView;
     private RecyclerView.LayoutManager customersLayoutManager;
     private Uri uriContact;
     private String contactID;     // contacts unique ID
     private String contactName;
     private String contactNumber;
-
+    private Customer longClickedCustomer;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel = new DashboardViewModel(((GlobalClass)getContext().getApplicationContext()).getRepository(), this);
-
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+        customerViewModel = new CustomerViewModel(((GlobalClass)getContext().getApplicationContext()).getRepository(), this);
+
         //final TextView textView = root.findViewById(R.id.text_dashboard);
-        dashboardViewModel.getCustomerData().observe(getViewLifecycleOwner(), new Observer<RecyclerView.Adapter>() {
+        customerViewModel.getCustomerData().observe(getViewLifecycleOwner(), new Observer<RecyclerView.Adapter>() {
             @Override
             public void onChanged(@Nullable RecyclerView.Adapter adapter) {
                 customersRecyclerView.setAdapter(adapter);
@@ -69,7 +69,7 @@ public class DashboardFragment extends Fragment {
         customersRecyclerView.setLayoutManager(customersLayoutManager);
 
         // specify an adapter (see also next example)
-        customersRecyclerView.setAdapter(dashboardViewModel.getCustomerData().getValue());
+        customersRecyclerView.setAdapter(customerViewModel.getCustomerData().getValue());
 
         //https://gist.github.com/evandrix/7058235
 
@@ -80,6 +80,8 @@ public class DashboardFragment extends Fragment {
                 startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), REQUEST_CODE_PICK_CONTACTS);
             }
         });
+
+        registerForContextMenu(customersRecyclerView);
 
         return root;
     }
@@ -92,10 +94,52 @@ public class DashboardFragment extends Fragment {
             uriContact = data.getData();
             retrieveContactName();
             retrieveContactNumber();
-            dashboardViewModel.AddCustomer(new Long(contactID), contactName, contactName);
+            customerViewModel.AddCustomer(new Long(contactID), contactName, contactNumber);
         }
     }
 
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.customerviewcontextmenu, menu);
+        menu.setHeaderTitle("Select Action");
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.call:
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+ longClickedCustomer.getPhone()));
+                try {
+                    checkPermission(Manifest.permission.CALL_PHONE, 100 );
+                    startActivity(callIntent);
+                }
+                catch(Exception exp) {
+                    exp.printStackTrace();
+                }
+                return true;
+            case R.id.delete:
+                customerViewModel.DeleteCustomer(longClickedCustomer);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    public void setLongClickedCustomer(Customer customer) {
+        longClickedCustomer = customer;
+    }
+
+    private void checkPermission(String permission, int requestCode)
+    {
+        // Checking if permission is not granted
+        if (ContextCompat.checkSelfPermission(getActivity(), permission) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat .requestPermissions(getActivity(), new String[] { permission }, requestCode);
+        }
+    }
     private void retrieveContactNumber() {
 
         // getting contacts ID
@@ -143,4 +187,6 @@ public class DashboardFragment extends Fragment {
 
         cursor.close();
     }
+
+
 }

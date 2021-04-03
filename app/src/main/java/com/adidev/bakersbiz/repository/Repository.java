@@ -25,11 +25,11 @@ public class Repository {
     }
 
     public List<Order> getOrders() {
-        return null;
+        return store.getOrders();
     }
 
     public Menu getMenu() {
-        return null;
+        return store.getMenu();
     }
 
     public Inventory getInventory() {
@@ -41,7 +41,8 @@ public class Repository {
     }
 
     public boolean updateCustomer(Customer customer) {
-        return false;
+        store.updateCustomer(customer);
+        return true;
     }
 
     public boolean deleteCustomer(Customer customer) {
@@ -72,6 +73,10 @@ public class Repository {
         return false;
     }
 
+    public Order getOrder(int orderID) {
+        return store.getOrder(orderID);
+    }
+
     public boolean addItemToInventory(Ingredient item) {
         return false;
     }
@@ -86,5 +91,9 @@ public class Repository {
 
     public Customer getCustomer(int customerId) {
         return store.getCustomer(customerId);
+    }
+
+    public void DeleteCustomer(Customer customer) {
+        store.deleteCustomer(customer);
     }
 }

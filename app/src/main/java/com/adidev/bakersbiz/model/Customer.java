@@ -12,6 +12,7 @@ public class Customer implements Serializable {
 	private String email;
 	private Long contactID;
     private int customerID;
+    private String notes;
 
     public Customer(Long contactID, String contactName, String contactNumber) {
         this.contactID = contactID;
@@ -43,6 +44,9 @@ public class Customer implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getNotes () {if(notes != null) return notes; else return "";}
+    public void setCustomerNotes(String notes) { this.notes = notes;}
 
     //Get a list of orders for this customer.
     public List<Order> getOrderList() {

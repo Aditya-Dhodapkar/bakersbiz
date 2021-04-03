@@ -90,6 +90,11 @@ public class FileStore implements Store {
     }
 
     @Override
+    public Order getOrder(int orderId) {
+        return null;
+    }
+
+    @Override
     public boolean addItemToInventory(Ingredient item) {
         return false;
     }

@@ -1,5 +1,6 @@
-package com.adidev.bakersbiz.ui.dashboard;
+package com.adidev.bakersbiz.ui.customers;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,11 @@ public class CustomerDataAdapter extends Adapter {
         Customer customer = repository.getCustomers().get(position);
         ((CustomerViewHolder)holder).personName.setText(customer.getName());
         ((CustomerViewHolder)holder).personPhone.setText(customer.getPhone());
-        ((CustomerViewHolder)holder).RetrieveContactPhoto(customer.getContactID());
+        Bitmap image = null;
+        image = ((CustomerViewHolder)holder).RetrieveContactPhoto(customer.getContactID());
+        if(image != null)
+            ((CustomerViewHolder)holder).personPhoto.setImageBitmap(image);
+
         ((CustomerViewHolder)holder).setCustomer(customer);
     }
     @Override

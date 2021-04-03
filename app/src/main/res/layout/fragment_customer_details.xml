@@ -53,51 +53,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop ="16dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
-        android:id="@+id/order"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            >
-
-            <TextView
-                android:id="@+id/order_delivery_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/order_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/order_delivery_date"
-                />
-
-            <TextView
-                android:id="@+id/order_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/order_delivery_date"
-                />
-
-            <TextView
-                android:id="@+id/order_item_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/order_item"
-                />
-        </RelativeLayout>
-
-    </androidx.cardview.widget.CardView>
-
+    <include layout="@layout/order_item"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -126,6 +82,6 @@
         android:layout_marginTop ="16dp"
         android:layout_marginRight="32dp"
         android:layout_marginLeft="32dp"
-        android:text="Delete"
+        android:text="Orders"
         />
 </LinearLayout>

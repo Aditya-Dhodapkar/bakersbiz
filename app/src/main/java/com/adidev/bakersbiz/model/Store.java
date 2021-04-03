@@ -17,6 +17,7 @@ public interface Store {
     boolean addNewOrder(Order order);
     boolean updateOrder(Order order);
     boolean deleteOrder(Order order);
+    Order getOrder(int orderId);
     boolean addItemToInventory(Ingredient item);
     boolean updateItemInInventory(Ingredient item);
     boolean deleteItemToInventory(Ingredient item);

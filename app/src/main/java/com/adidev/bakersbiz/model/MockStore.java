@@ -12,10 +12,19 @@ import java.util.List;
 
 public class MockStore implements Store {
     private List<Customer> list;
+    private List<Order> orderList;
+    //Only 1 menu for now.
+    private Menu menu;
     private String filesDir;
-    public MockStore(String filesDir){
+    public MockStore(String filesDir) {
         this.filesDir = filesDir;
-        list = new ArrayList<Customer>();
+        list = ReadDataFromFile(filesDir + "//customer.txt");
+        if(list == null)
+            list = new ArrayList<Customer>();
+        if(menu == null)
+            menu = new Menu();
+        if(orderList == null)
+            orderList = new ArrayList<Order>();
     }
 
     @Override
@@ -25,12 +34,12 @@ public class MockStore implements Store {
 
     @Override
     public List<Order> getOrders() {
-        return null;
+        return orderList;
     }
 
     @Override
     public Menu getMenu() {
-        return null;
+        return menu;
     }
 
     @Override
@@ -49,27 +58,33 @@ public class MockStore implements Store {
 
     @Override
     public boolean updateCustomer(Customer customer) {
-        return false;
+        Customer entry = getCustomer(customer.getCustomerID());
+        entry.setCustomerNotes(customer.getNotes());
+        SaveListsToStore(filesDir + "//customer.txt", list);
+        return true;
     }
 
     @Override
     public boolean deleteCustomer(Customer customer) {
-        return false;
+        int index = getIndexOfCustomer(customer);
+        list.remove(index);
+        SaveListsToStore(filesDir + "//customer.txt", list);
+        return true;
     }
 
     @Override
     public boolean addToMenu(MenuItem item) {
-        return false;
+        return menu.addMenuItem(item);
     }
 
     @Override
     public boolean updateMenuItem(MenuItem item) {
-        return false;
+        return menu.updateMenuItem(item);
     }
 
     @Override
     public boolean deleteMenuItem(MenuItem item) {
-        return false;
+        return menu.deleteMenuItem(item);
     }
 
     @Override
@@ -85,6 +100,16 @@ public class MockStore implements Store {
     @Override
     public boolean deleteOrder(Order order) {
         return false;
+    }
+
+    @Override
+    public Order getOrder(int orderId) {
+        for(int i =0; i < orderList.size(); i++){
+            if(orderList.get(i).getOrderID() == orderId)
+                return orderList.get(i);
+        }
+
+        return null;
     }
 
     @Override
@@ -119,6 +144,14 @@ public class MockStore implements Store {
         return customer;
     }
 
+    private int getIndexOfCustomer(Customer customerToFind){
+        for(int i=0;i<list.size();i++){
+            Customer customer = list.get(i);
+            if(customer.getCustomerID() == customerToFind.getCustomerID())
+                return i;
+        }
+        return -1;//not found.
+    }
 
     //This function saves the all the objects in the list that is passed
     //to the function at the given filePath.
@@ -128,7 +161,7 @@ public class MockStore implements Store {
         try {
             File file = new File(filePath);
             //will create a new file only if a file does'nt exist.
-            file.createNewFile();
+            Boolean newFile = file.createNewFile();
             stream = new ObjectOutputStream(new FileOutputStream(file));
             stream.writeObject(listToSave);
         }
