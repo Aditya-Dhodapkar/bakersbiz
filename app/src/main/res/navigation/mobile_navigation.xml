@@ -4,17 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
-
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.adidev.bakersbiz.ui.Orders.OrdersFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
-    <action
-        android:id="@+id/navigate_to_order_detail"
-        app:destination="@id/navigation_order_details" />
-    />
+        <argument
+            android:name="customer_name"
+            app:argType="string" />
+        <action
+            android:id="@+id/navigate_to_order_detail"
+            app:destination="@id/navigation_order_details" />
+        />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_order_details"
+        android:name="com.adidev.bakersbiz.ui.orderdetails.OrderDetailsFragment"
+        android:label="@string/order_details"
+        tools:layout="@layout/order_details_fragement">
+        <argument
+            android:name="order_id"
+            app:argType="integer" />
+        <action
+            android:id="@+id/navigate_to_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+
+
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -25,15 +41,6 @@
             android:id="@+id/navigate_to_customer_detail"
             app:destination="@id/navigation_customer_details" />
     </fragment>
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.adidev.bakersbiz.ui.menu.MenuFragment"
-        android:label="@string/title_notifications">
-        <action
-            android:id="@+id/navigate_to_menu_detail"
-            app:destination="@id/navigation_menu_details" />
-     </fragment>
     <fragment
         android:id="@+id/navigation_customer_details"
         android:name="com.adidev.bakersbiz.ui.customerdetails.CustomerDetailsFragment"
@@ -43,22 +50,30 @@
             android:name="customer_id"
             app:argType="integer" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.adidev.bakersbiz.ui.menu.MenuFragment"
+        android:label="Menu"
+        tools:layout="@layout/fragment_notifications">
+        <action
+            android:id="@+id/navigate_to_menu_detail"
+            app:destination="@id/navigation_menu_details" />
+        />
+    </fragment>
+
     <fragment
         android:id="@+id/navigation_menu_details"
         android:name="com.adidev.bakersbiz.ui.menudetails.MenuDetailsFragment"
-        android:label="@string/customers_details"
+        android:label="Menu item details"
         tools:layout="@layout/menu_details_fragment">
         <argument
-            android:name="menu_item"
+            android:name="menu_name"
             app:argType="string" />
+        <action
+            android:id="@+id/navigate_to_notifications"
+            app:destination="@id/navigation_notifications" />
     </fragment>
-    <fragment
-        android:id="@+id/navigation_order_details"
-        android:name="com.adidev.bakersbiz.ui.orderdetails.OrderDetailsFragment"
-        android:label="@string/customers_details"
-        tools:layout="@layout/order_details_fragement">
-        <argument
-            android:name="order_id"
-            app:argType="integer" />
-    </fragment>
+
+
 </navigation>

@@ -19,7 +19,7 @@ public class MenuViewModel extends ViewModel {
     public MenuViewModel(Repository repo, Fragment associatedFragment) {
         this.repo = repo;
         this.associatedFragment = associatedFragment;
-        RecyclerView.Adapter orderAdapter = new OrdersDataAdapter(repo, associatedFragment);
+        RecyclerView.Adapter orderAdapter = new MenuDataAdapter(repo, associatedFragment);
         menuData = new MutableLiveData<>();
         menuData.setValue(orderAdapter);
     }

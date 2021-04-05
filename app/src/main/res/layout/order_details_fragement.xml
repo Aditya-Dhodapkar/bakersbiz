@@ -11,52 +11,90 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop ="16dp"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
         android:id="@+id/order_details"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             >
 
             <EditText
-                    android:id="@+id/order_delivery_date_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <EditText
-                android:id="@+id/order_price_details"
-                android:layout_width="wrap_content"
+                android:id="@+id/order_customer_details"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/order_delivery_date_details"
-                />
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Customer name"
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/order_item_details"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/order_delivery_date_details"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Item name"
+                android:inputType="textPersonName"
                 />
 
             <EditText
-                android:id="@+id/order_item_quantity_details"
-                android:layout_width="wrap_content"
+                android:id="@+id/order_delivery_date_details"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/order_item_details"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Order delivery date (DD/MM/YYYY)"
+                android:inputType="datetime" />
+
+            <EditText
+                android:id="@+id/order_item_quantity_details"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Quantity"
+                android:inputType="number"
+                />
+
+            <EditText
+                android:id="@+id/order_price_details"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Total Price"
+                android:inputType="numberDecimal"
                 />
 
             <MultiAutoCompleteTextView
                 android:id="@+id/order_item_description_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/order_item_quantity_details"
+                android:layout_width="fill_parent"
+                android:layout_height="75dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="top"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:hint="Additional order details"
+                android:fitsSystemWindows="true"
+                android:breakStrategy="balanced"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                android:padding="5dp"
                 />
 
-        </RelativeLayout>
+            <Button
+                android:id="@+id/order_submit_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorPrimaryDark"
+                android:elevation="4dp"
+                android:paddingLeft="70dp"
+                android:paddingRight="70dp"
+                android:layout_marginBottom="8dp"
+                android:text="Submit"
+                android:textColor="#fff" />
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

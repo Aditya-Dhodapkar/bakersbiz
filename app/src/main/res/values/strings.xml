@@ -94,4 +94,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="customers_details">Customer Details</string>
+    <string name="order_details">Order Details</string>
+    <string name="menu_details">Menu Details</string>
+
 </resources>

@@ -9,22 +9,35 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MockStore implements Store {
     private List<Customer> list;
     private List<Order> orderList;
+    private String orderListStore = "//orders.txt";
+    private String customerListStore = "//customer.txt";
+    private String menuListStore = "//menu.txt";
     //Only 1 menu for now.
     private Menu menu;
     private String filesDir;
     public MockStore(String filesDir) {
         this.filesDir = filesDir;
-        list = ReadDataFromFile(filesDir + "//customer.txt");
+        list = ReadDataFromFile(filesDir + customerListStore);
+        orderList = ReadDataFromFile(filesDir + orderListStore);
+        List<MenuItem> menuItems = ReadDataFromFile(filesDir + menuListStore);
+        if(menuItems  != null)
+            menu = new Menu(menuItems);
+
         if(list == null)
             list = new ArrayList<Customer>();
+        else
+            list = SortCustomerListsBasedOnName(list);
         if(menu == null)
             menu = new Menu();
         if(orderList == null)
             orderList = new ArrayList<Order>();
+        else
+            orderList = SortOrderListsBasedOnDate(orderList);
     }
 
     @Override
@@ -51,8 +64,8 @@ public class MockStore implements Store {
     public boolean addNewCustomer(Customer customer) {
         list.add(customer);
         List<Customer> custList = SortCustomerListsBasedOnName(list);
-        SaveListsToStore(filesDir + "//customer.txt", list);
-        List list = ReadDataFromFile(filesDir + "//customer.txt");
+        SaveListsToStore(filesDir + customerListStore, list);
+        List list = ReadDataFromFile(filesDir + customerListStore);
         return true;
     }
 
@@ -60,7 +73,7 @@ public class MockStore implements Store {
     public boolean updateCustomer(Customer customer) {
         Customer entry = getCustomer(customer.getCustomerID());
         entry.setCustomerNotes(customer.getNotes());
-        SaveListsToStore(filesDir + "//customer.txt", list);
+        SaveListsToStore(filesDir + customerListStore, list);
         return true;
     }
 
@@ -68,38 +81,59 @@ public class MockStore implements Store {
     public boolean deleteCustomer(Customer customer) {
         int index = getIndexOfCustomer(customer);
         list.remove(index);
-        SaveListsToStore(filesDir + "//customer.txt", list);
+        SaveListsToStore(filesDir + customerListStore, list);
         return true;
     }
 
     @Override
     public boolean addToMenu(MenuItem item) {
-        return menu.addMenuItem(item);
+         menu.addMenuItem(item);
+         SaveListsToStore(filesDir + menuListStore, menu.getMenuItems());
+         return true;
     }
 
     @Override
     public boolean updateMenuItem(MenuItem item) {
-        return menu.updateMenuItem(item);
+        menu.updateMenuItem(item);
+        SaveListsToStore(filesDir + menuListStore, menu.getMenuItems());
+        return true;
     }
 
     @Override
     public boolean deleteMenuItem(MenuItem item) {
-        return menu.deleteMenuItem(item);
+        menu.deleteMenuItem(item);
+        SaveListsToStore(filesDir + menuListStore, menu.getMenuItems());
+        return true;
     }
 
     @Override
     public boolean addNewOrder(Order order) {
-        return false;
+        if(order.getOrderID() == -1) {
+            order.setOrderID(new Random().nextInt(1000));
+            orderList.add(order);
+            orderList = SortOrderListsBasedOnDate(orderList);
+            SaveListsToStore(filesDir + orderListStore, orderList);
+        }
+        return true;
     }
 
     @Override
     public boolean updateOrder(Order order) {
-        return false;
+        int orderPosition = getOrderPosition(order.getOrderID());
+        orderList.remove(orderPosition);
+        orderList.add(order);
+        orderList = SortOrderListsBasedOnDate(orderList);
+        SaveListsToStore(filesDir + orderListStore, orderList);
+        return true;
     }
 
     @Override
     public boolean deleteOrder(Order order) {
-        return false;
+        int orderPosition = getOrderPosition(order.getOrderID());
+        orderList.remove(orderPosition);
+        orderList = SortOrderListsBasedOnDate(orderList);
+        SaveListsToStore(filesDir + orderListStore, orderList);
+        return true;
     }
 
     @Override
@@ -239,4 +273,39 @@ public class MockStore implements Store {
         }
         return list;
     }
+
+    private List<Order> SortOrderListsBasedOnDate(List<Order> list) {
+        int i, j, min;
+        int listSize = list.size();
+        // Use selection sort to sort customers by their name.
+        for (i = 0; i < listSize -1; i++)
+        {
+            // Look for the minimum element in the list
+            min = i;
+            Order order2 = list.get(min);
+
+            for (j = i+1; j < listSize; j++) {
+                Order order1 = list.get(j);
+                if (order1.getOrderDeliveryDate().compareTo(order2.getOrderDeliveryDate()) > 0)
+                    min = j;
+            }
+            //Swap
+            Order temp = list.get(i);
+            list.set(i, list.get(min));
+            list.set(min, temp);
+        }
+        return list;
+    }
+
+    private int getOrderPosition(int orderId) {
+        int orderPos = -1;
+        for(int i =0; i < orderList.size(); i++){
+            orderPos = i;
+            if(orderList.get(i).getOrderID() == orderId)
+                break;
+        }
+
+        return orderPos;
+    }
+
 }

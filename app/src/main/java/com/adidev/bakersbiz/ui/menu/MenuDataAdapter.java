@@ -30,7 +30,7 @@ public class MenuDataAdapter  extends Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.customer_card_view, parent, false);
+                .inflate(R.layout.menuitem_card_view, parent, false);
         // set the view's size, margins, paddings and layout parameters
         RecyclerView.ViewHolder vh = new MenuViewHolder(v, associatedFragment);
         return vh;
@@ -40,8 +40,8 @@ public class MenuDataAdapter  extends Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MenuItem item = repository.getMenu().getItemAtPos(position);
         ((MenuViewHolder)holder).itemName.setText(item.getName());
-        ((MenuViewHolder)holder).itemPrice.setText(item.getPrice());
-        ((MenuViewHolder)holder).itemPrice.setText(item.getDescription());
+        ((MenuViewHolder)holder).itemPrice.setText("₹" + String.valueOf(item.getPrice()));
+        ((MenuViewHolder)holder).itemDescription.setText(item.getDescription());
         ((MenuViewHolder)holder).setMenuItem(item);
     }
     @Override

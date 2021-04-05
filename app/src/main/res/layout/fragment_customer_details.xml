@@ -11,7 +11,6 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop ="16dp"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
         android:id="@+id/card_view"
@@ -37,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/person_name"
                 android:layout_toRightOf="@+id/person_photo"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:layout_alignParentTop="true"
                 android:textSize="30sp"
                 />
@@ -46,14 +46,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/person_phone"
                 android:layout_toRightOf="@+id/person_photo"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:layout_below="@+id/person_name"
                 />
 
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <include layout="@layout/order_item"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -66,22 +65,32 @@
 
         <MultiAutoCompleteTextView
             android:id="@+id/customer_notes"
-            android:layout_width="match_parent"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_height="120dp"/>
+            android:layout_width="fill_parent"
+            android:layout_height="75dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="top"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:hint="Additional order details"
+            android:fitsSystemWindows="true"
+            android:breakStrategy="balanced"
+            android:inputType="textMultiLine"
+            android:singleLine="false"
+            android:padding="5dp"/>
 
     </androidx.cardview.widget.CardView>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/delete_customer_button"
-        android:layout_marginTop ="16dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginLeft="32dp"
-        android:text="Orders"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:elevation="4dp"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Update"
+        android:textColor="#fff"
         />
 </LinearLayout>

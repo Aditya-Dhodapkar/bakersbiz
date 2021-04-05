@@ -13,6 +13,7 @@ import com.adidev.bakersbiz.repository.Repository;
 import com.adidev.bakersbiz.ui.customers.CustomerDataAdapter;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class OrdersViewModel extends ViewModel {
 
@@ -32,8 +33,8 @@ public class OrdersViewModel extends ViewModel {
     }
 
     //This method updates the repository and then tells the List Adapter that the data had changed.
-    public void AddOrder(int orderID, int customerID, int price, String customerName, MenuItem item, int discounts, int numberOfItems, LocalDateTime orderDeliveryDate) {
-        Order order = new Order(orderID, customerID,  price, customerName,  item,  discounts,  numberOfItems,  orderDeliveryDate);
+    public void AddOrder(int orderID, int customerID, int price, String customerName, MenuItem item, int discounts, int numberOfItems, Date orderDeliveryDate) {
+        Order order = new Order(orderID, customerID,  price, customerName,  item.getName(),  discounts,  numberOfItems,  orderDeliveryDate);
         repo.addNewOrder(order);
         //This should update the list UI to refresh itself if the underlying data in the store changed.
         orderData.getValue().notifyDataSetChanged();
@@ -43,8 +44,8 @@ public class OrdersViewModel extends ViewModel {
         repo.updateOrder(order);
     }
 
-    public void DeleteCustomer(Customer customer) {
-        repo.DeleteCustomer(customer);
+    public void DeleteOrder(Order order) {
+        repo.deleteOrder(order);
         //This should update the list UI to refresh itself if the underlying data in the store changed.
         orderData.getValue().notifyDataSetChanged();
     }

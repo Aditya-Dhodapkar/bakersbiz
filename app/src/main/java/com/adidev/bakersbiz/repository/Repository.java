@@ -50,26 +50,30 @@ public class Repository {
     }
 
     public boolean addToMenu(MenuItem item) {
-        return false;
+        return store.addToMenu(item);
     }
 
     public boolean updateMenuItem(MenuItem item) {
-        return false;
+        return store.updateMenuItem(item);
     }
 
     public boolean deleteMenuItem(MenuItem item) {
-        return false;
+
+        return store.deleteMenuItem(item);
     }
 
     public boolean addNewOrder(Order order) {
-        return false;
+        store.addNewOrder(order);
+        return true;
     }
 
     public boolean updateOrder(Order order) {
-        return false;
+        store.updateOrder(order);
+        return true;
     }
 
     public boolean deleteOrder(Order order) {
+        store.deleteOrder(order);
         return false;
     }
 

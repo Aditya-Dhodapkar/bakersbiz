@@ -2,6 +2,7 @@ package com.adidev.bakersbiz.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Order implements Serializable {
     private int orderID;
@@ -9,18 +10,19 @@ public class Order implements Serializable {
     private int price;
     private String customerName;
     private MenuItem item;
+    private String itemName;
     private int discounts;
     private int numberOfItems;
     private OrderStatus status;
-    private LocalDateTime orderDeliveryDate;
-    private LocalDateTime orderPlacedDate;
+    private Date orderDeliveryDate;
+    private Date orderPlacedDate;
     private String orderDescription;
 
-    public Order (int orderID, int customerID, int price, String customerName, MenuItem item, int discounts, int numberOfItems, LocalDateTime orderDeliveryDate)    {
+    public Order (int orderID, int customerID, int price, String customerName, String item, int discounts, int numberOfItems, Date orderDeliveryDate)    {
         this.orderID = orderID;
         this.customerID = customerID;
         this.customerName = customerName;
-        this.item = item;
+        this.itemName = item;
         this.discounts = discounts;
         this.numberOfItems = numberOfItems;
         this.orderDeliveryDate = orderDeliveryDate;
@@ -34,13 +36,15 @@ public class Order implements Serializable {
         return orderID;
     }
 
-    public LocalDateTime getOrderDeliveryDate() {
+    public Date getOrderDeliveryDate() {
         return orderDeliveryDate;
     }
 
     public MenuItem getItem() {
         return item;
     }
+
+    public String getItemName(){return itemName;}
 
     public OrderStatus getStatus() {
         return status;
@@ -64,6 +68,11 @@ public class Order implements Serializable {
         return orderDescription;
     }
 
+    public void setOrderID(int orderID) {
+        if(this.orderID == -1)
+            this.orderID = orderID;
+    }
+
     public void setCustomerID(int customerID) {
         this.customerID = customerID;
     }
@@ -76,11 +85,11 @@ public class Order implements Serializable {
         this.item = item;
     }
 
-    public void setOrderDeliveryDate(LocalDateTime orderDeliveryDate) {
+    public void setOrderDeliveryDate(Date orderDeliveryDate) {
         this.orderDeliveryDate = orderDeliveryDate;
     }
 
-    public void setOrderPlacedDate(LocalDateTime orderPlacedDate) {
+    public void setOrderPlacedDate(Date orderPlacedDate) {
         this.orderPlacedDate = orderPlacedDate;
     }
 

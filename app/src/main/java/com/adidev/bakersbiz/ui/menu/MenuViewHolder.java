@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,7 @@ import com.adidev.bakersbiz.R;
 import com.adidev.bakersbiz.model.Customer;
 import com.adidev.bakersbiz.model.MenuItem;
 import com.adidev.bakersbiz.ui.menudetails.MenuDetailsFragment;
+import com.adidev.bakersbiz.ui.menudetails.MenuDetailsFragmentDirections;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +37,7 @@ public class MenuViewHolder extends RecyclerView.ViewHolder  implements View.OnC
 
     public MenuViewHolder(View v, Fragment associatedFragment) {
         super(v);
-        card = v.findViewById(R.id.cv);
+        card = v.findViewById(R.id.menu_item);
         itemName = (TextView)v.findViewById(R.id.item_name);
         itemPrice = (TextView)v.findViewById(R.id.item_price);
         itemDescription = (TextView)v.findViewById(R.id.item_description);
@@ -44,15 +46,14 @@ public class MenuViewHolder extends RecyclerView.ViewHolder  implements View.OnC
         this.associatedFragment = associatedFragment;
     }
 
+
     public void setMenuItem(MenuItem item){
         this.item = item;
     }
 
     @Override
     public void onClick(View view) {
-
-        MenuFragmentDirections.NavigateToMenuDetail directions =
-                MenuFragmentDirections.navigateToMenuDetail(item.getName());
+        MenuFragmentDirections.NavigateToMenuDetail directions = MenuFragmentDirections.navigateToMenuDetail(item.getName());
         NavHostFragment.findNavController(associatedFragment).navigate(directions);
     }
 

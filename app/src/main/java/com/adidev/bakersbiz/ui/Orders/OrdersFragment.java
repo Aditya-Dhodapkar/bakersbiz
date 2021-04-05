@@ -1,9 +1,14 @@
 package com.adidev.bakersbiz.ui.Orders;
 
+import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -71,7 +76,30 @@ public class OrdersFragment extends Fragment {
                 NavHostFragment.findNavController(fragment).navigate(directions);
             }
         });
+
+        registerForContextMenu(ordersRecyclerView);
+
         return root;
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.orderscontextmenu, menu);
+        menu.setHeaderTitle("Select Action");
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId())
+        {
+            case R.id.delete:
+                ordersViewModel.DeleteOrder(longClickedOrder);
+                return false;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     public void setLongClickedOrder(Order order) {
