@@ -27,6 +27,7 @@ import com.adidev.bakersbiz.R;
 import com.adidev.bakersbiz.model.Order;
 import com.adidev.bakersbiz.repository.Repository;
 import com.adidev.bakersbiz.ui.menu.MenuViewModel;
+import com.adidev.bakersbiz.ui.orderdetails.OrderDetailsFragmentArgs;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class OrdersFragment extends Fragment {
@@ -35,13 +36,23 @@ public class OrdersFragment extends Fragment {
     private RecyclerView ordersRecyclerView;
     private RecyclerView.LayoutManager ordersLayoutManager;
     private Order longClickedOrder;
+    private OrdersFragmentArgs args = null;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        if(bundle != null && !bundle.isEmpty())
+            args = OrdersFragmentArgs.fromBundle(bundle);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        String customerName = null;
+        if(args != null)
+            customerName = args.getCustomerName();
 
-        ordersViewModel = new OrdersViewModel(((GlobalClass)getContext().getApplicationContext()).getRepository(), this);
-
+        ordersViewModel = new OrdersViewModel(((GlobalClass)getContext().getApplicationContext()).getRepository(), this, customerName);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         ordersViewModel.getOrderData().observe(getViewLifecycleOwner(), new Observer<RecyclerView.Adapter>() {
@@ -97,7 +108,8 @@ public class OrdersFragment extends Fragment {
             case R.id.delete:
                 ordersViewModel.DeleteOrder(longClickedOrder);
                 return false;
-            default:
+
+           default:
                 return super.onContextItemSelected(item);
         }
     }

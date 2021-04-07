@@ -25,6 +25,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_baseline_add_24"
         app:layout_constraintTop_toBottomOf="@+id/menu_list_recycler_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +29,7 @@ import com.adidev.bakersbiz.GlobalClass;
 import com.adidev.bakersbiz.MainActivity;
 import com.adidev.bakersbiz.R;
 import com.adidev.bakersbiz.model.Customer;
+import com.adidev.bakersbiz.ui.Orders.OrdersFragmentDirections;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import static android.app.Activity.RESULT_OK;
@@ -77,6 +79,7 @@ public class CustomerFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkPermission(Manifest.permission.READ_CONTACTS, 100 );
                 startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), REQUEST_CODE_PICK_CONTACTS);
             }
         });
@@ -123,6 +126,10 @@ public class CustomerFragment extends Fragment {
                 return true;
             case R.id.delete:
                 customerViewModel.DeleteCustomer(longClickedCustomer);
+                return true;
+            case R.id.orders:
+                CustomerFragmentDirections.NavigateToHome directions = CustomerFragmentDirections.navigateToHome(longClickedCustomer.getName());
+                NavHostFragment.findNavController(this).navigate(directions);
                 return true;
             default:
                 return super.onContextItemSelected(item);

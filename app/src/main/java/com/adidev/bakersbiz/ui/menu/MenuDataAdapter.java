@@ -40,7 +40,7 @@ public class MenuDataAdapter  extends Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         MenuItem item = repository.getMenu().getItemAtPos(position);
         ((MenuViewHolder)holder).itemName.setText(item.getName());
-        ((MenuViewHolder)holder).itemPrice.setText("₹" + String.valueOf(item.getPrice()));
+        ((MenuViewHolder)holder).itemPrice.setText("₹ " + String.valueOf(item.getPrice()));
         ((MenuViewHolder)holder).itemDescription.setText(item.getDescription());
         ((MenuViewHolder)holder).setMenuItem(item);
     }

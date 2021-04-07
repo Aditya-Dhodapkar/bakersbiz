@@ -17,6 +17,7 @@ import com.adidev.bakersbiz.repository.Repository;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -27,9 +28,21 @@ public class OrdersDataAdapter extends RecyclerView.Adapter{
 
     Repository repository;
     Fragment associatedFragment;
-    public OrdersDataAdapter(Object dataSet, Fragment associatedFragment) {
+    String customerName;
+    List<Order> orders;
+    public OrdersDataAdapter(Object dataSet, Fragment associatedFragment, String customerName) {
         repository = (Repository) dataSet;
         this.associatedFragment = associatedFragment;
+        this.customerName = customerName;
+        orders = repository.getOrders();
+        List<Order> tempOrders = new ArrayList<Order>();
+        if(customerName != null && !customerName.isEmpty()) {
+            for (int i = 0; i < orders.size(); i++) {
+                if (orders.get(i).getCustomerName().compareToIgnoreCase(customerName) == 0)
+                    tempOrders.add(orders.get(i));
+            }
+            orders = tempOrders;
+        }
     }
 
     @NonNull
@@ -45,7 +58,6 @@ public class OrdersDataAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        List<Order> orders = repository.getOrders();
         Order order = orders.get(position);
 
         Date curDate = java.util.Calendar.getInstance().getTime();
@@ -56,14 +68,14 @@ public class OrdersDataAdapter extends RecyclerView.Adapter{
         DateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, ''yyyy");
         String strDate = dateFormat.format(order.getOrderDeliveryDate());
         ((OrdersViewHolder)holder).orderDeliveryDate.setText(strDate);
-        ((OrdersViewHolder)holder).orderPrice.setText("₹" + String.valueOf(order.getPrice()));
+        ((OrdersViewHolder)holder).orderPrice.setText("₹ " + String.valueOf(order.getPrice()));
         ((OrdersViewHolder)holder).orderItem.setText(order.getItemName());
 
         String unitCount;
         if(order.getNumberOfItems() == 1)
-            unitCount = String.valueOf(order.getNumberOfItems()) + "unit";
+            unitCount = String.valueOf(order.getNumberOfItems()) + "unit ";
         else
-            unitCount = String.valueOf(order.getNumberOfItems()) + "units";
+            unitCount = String.valueOf(order.getNumberOfItems()) + "units ";
 
         ((OrdersViewHolder)holder).orderQuantity.setText(unitCount);
         ((OrdersViewHolder)holder).orderCustomerName.setText(order.getCustomerName());
@@ -71,6 +83,6 @@ public class OrdersDataAdapter extends RecyclerView.Adapter{
     }
     @Override
     public int getItemCount() {
-        return repository.getOrders().size();
+        return orders.size();
     }
 }

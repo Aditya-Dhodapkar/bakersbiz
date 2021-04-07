@@ -24,10 +24,10 @@ public class OrdersViewModel extends ViewModel {
 
     public LiveData<RecyclerView.Adapter> getOrderData() {return orderData;}
 
-    public OrdersViewModel(Repository repo, Fragment associatedFragment) {
+    public OrdersViewModel(Repository repo, Fragment associatedFragment, String customerName) {
         this.repo = repo;
         this.associatedFragment = associatedFragment;
-        RecyclerView.Adapter orderAdapter = new OrdersDataAdapter(repo, associatedFragment);
+        RecyclerView.Adapter orderAdapter = new OrdersDataAdapter(repo, associatedFragment, customerName);
         orderData = new MutableLiveData<>();
         orderData.setValue(orderAdapter);
     }
