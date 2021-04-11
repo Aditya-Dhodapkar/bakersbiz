@@ -45,6 +45,7 @@
         <action
             android:id="@+id/navigate_to_home"
             app:destination="@id/navigation_home" />
+
     </fragment>
     <fragment
         android:id="@+id/navigation_customer_details"
@@ -54,6 +55,9 @@
         <argument
             android:name="customer_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/navigate_to_dashboard"
+            app:destination="@id/navigation_dashboard" />
     </fragment>
 
     <fragment

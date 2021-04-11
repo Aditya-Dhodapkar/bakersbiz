@@ -9,6 +9,7 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,11 +17,15 @@ import com.adidev.bakersbiz.GlobalClass;
 import com.adidev.bakersbiz.R;
 import com.adidev.bakersbiz.UIUtils;
 import com.adidev.bakersbiz.model.Customer;
+import com.adidev.bakersbiz.ui.customers.CustomerFragmentDirections;
+import com.adidev.bakersbiz.ui.orderdetails.OrderDetailsFragmentDirections;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
+import androidx.navigation.NavDirections;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +36,7 @@ public class CustomerDetailsFragment extends Fragment {
     private Customer customer;
     private CustomerDetailsFragmentArgs args;
     private View root;
+    private Button updateButton;
 
     public CustomerDetailsFragment(){ }
     public CustomerDetailsFragment(Customer customer) {
@@ -71,6 +77,22 @@ public class CustomerDetailsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable Customer customer) {
                 textView.setText(customer.getName());
+            }
+        });
+
+        updateButton = root.findViewById(R.id.update_customer_details);
+        final Fragment thisFragment = this;
+
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView notesView = root.findViewById(R.id.customer_notes);
+                final CharSequence text = notesView.getText();
+                customer.setCustomerNotes(text.toString());
+                ((GlobalClass) getContext().getApplicationContext()).getRepository().updateCustomer(customer);
+
+                NavDirections directions = CustomerDetailsFragmentDirections.navigateToDashboard();
+                NavHostFragment.findNavController(thisFragment).navigate(directions);
             }
         });
 
