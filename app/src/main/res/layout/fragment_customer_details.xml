@@ -71,7 +71,7 @@
             android:layout_marginTop="10dp"
             android:gravity="top"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:hint="Additional order details"
+            android:hint="Customer details details"
             android:fitsSystemWindows="true"
             android:breakStrategy="balanced"
             android:inputType="textMultiLine"
